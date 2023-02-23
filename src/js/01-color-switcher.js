@@ -13,6 +13,8 @@ bgdColorBtnStop.addEventListener('click', onStopBtnClick);
 let timerId = null;
 
 function onStartBtnClick() {
+  bgdColorBtnStart.disabled = true;
+  bgdColorBtnStop.disabled = false;
   timerId = setInterval(setColor, 1000);
 }
 
@@ -20,12 +22,10 @@ function setColor() {
   const colorValue = getRandomHexColor();
   //   console.log(`Color = `, colorValue);
   document.body.style.backgroundColor = colorValue;
-  bgdColorBtnStart.disabled = true;
-  bgdColorBtnStop.disabled = false;
 }
 
 function onStopBtnClick() {
-  clearInterval(timerId);
   bgdColorBtnStart.disabled = false;
   bgdColorBtnStop.disabled = true;
+  clearInterval(timerId);
 }
