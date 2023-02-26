@@ -5,15 +5,15 @@ import 'flatpickr/dist/flatpickr.min.css';
 
 import Notiflix from 'notiflix';
 
-let timerId = null;
-// let futureTimerId = null;
-let futureTime = 0;
-
 const btnStartTimer = document.querySelector('button[data-start]');
 const dayRemaining = document.querySelector('.value[data-days]');
 const hourRemaining = document.querySelector('.value[data-hours]');
 const minRemaining = document.querySelector('.value[data-minutes]');
 const secRemaining = document.querySelector('.value[data-seconds]');
+
+let timerId = null;
+// let futureTimerId = null;
+let futureTime = 0;
 
 btnStartTimer.disabled = true;
 
