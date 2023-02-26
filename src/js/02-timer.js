@@ -3,6 +3,8 @@ import flatpickr from 'flatpickr';
 // Додатковий імпорт стилів
 import 'flatpickr/dist/flatpickr.min.css';
 
+import Notiflix from 'notiflix';
+
 let timerId = null;
 // let futureTimerId = null;
 let futureTime = 0;
@@ -30,7 +32,7 @@ const options = {
     //   alert('Please choose a future date!');
     // }
     futureTime - Date.now() <= 0
-      ? (alert('Please choose a date in the future'),
+      ? (Notiflix.Notify.failure('Please choose a date in the future'),
         (btnStartTimer.disabled = true))
       : (btnStartTimer.disabled = false);
   },
@@ -42,8 +44,8 @@ btnStartTimer.addEventListener('click', onStartBtnClick);
 
 function onStartBtnClick() {
   btnStartTimer.disabled = true;
-  // console.log(`futureTime - realTime == `, futureTime - Date.now());
   timerId = setInterval(setRemaining, 1000);
+  // timerId2 = setInterval(() => {}, 1000);
 }
 
 function setRemaining() {
@@ -66,7 +68,48 @@ function setRemaining() {
     : (clearInterval(timerId), (btnStartTimer.disabled = true));
 }
 
+// function setMainTimer(ms) {
+//   // Number of milliseconds per unit of time
+//   const second = 1000;
+//   const minute = second * 60;
+//   const hour = minute * 60;
+//   const day = hour * 24;
+
+//   // Remaining days
+//   const days = Math.floor(ms / day);
+
+//   dayRemaining.textContent = addLeadingZero(days);
+//   // Remaining hours
+//   const hours = Math.floor((ms % day) / hour);
+
+//   hourRemaining.textContent = addLeadingZero(hours);
+//   // Remaining minutes
+//   const minutes = Math.floor(((ms % day) % hour) / minute);
+
+//   minRemaining.textContent = addLeadingZero(minutes);
+//   // Remaining seconds
+//   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+
+//   secRemaining.textContent = addLeadingZero(seconds);
+
+//   return { days, hours, minutes, seconds };
+// }
+
 function setMainTimer(ms) {
+  const { days, hours, minutes, seconds } = convertMs(ms);
+
+  dayRemaining.textContent = addLeadingZero(days);
+  hourRemaining.textContent = addLeadingZero(hours);
+  minRemaining.textContent = addLeadingZero(minutes);
+  secRemaining.textContent = addLeadingZero(seconds);
+  return { days, hours, minutes, seconds };
+}
+
+function addLeadingZero(value) {
+  return value.toString().padStart(2, 0);
+}
+
+function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
   const minute = second * 60;
@@ -75,26 +118,14 @@ function setMainTimer(ms) {
 
   // Remaining days
   const days = Math.floor(ms / day);
-
-  dayRemaining.textContent = addLeadingZero(days);
   // Remaining hours
   const hours = Math.floor((ms % day) / hour);
-
-  hourRemaining.textContent = addLeadingZero(hours);
   // Remaining minutes
   const minutes = Math.floor(((ms % day) % hour) / minute);
-
-  minRemaining.textContent = addLeadingZero(minutes);
   // Remaining seconds
   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
-  secRemaining.textContent = addLeadingZero(seconds);
-
   return { days, hours, minutes, seconds };
-}
-
-function addLeadingZero(value) {
-  return value.toString().padStart(2, 0);
 }
 
 // futureTimerId = setInterval(unLockBtn, 1000);
