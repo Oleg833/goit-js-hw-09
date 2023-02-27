@@ -40,7 +40,7 @@ function onFormSubmit(event) {
     });
   }
 
-  // event.currentTarget.reset();
+  event.currentTarget.reset();
 }
 
 // createPromise(1, 500)
